@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Workout Planner</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            text-align: center;
+            padding: 20px;
+        }
+        h2, h3 {
+            color: #333;
+        }
+        form {
+            background: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            display: inline-block;
+            margin-bottom: 20px;
+        }
+        input {
+            padding: 10px;
+            margin: 5px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        button {
+            padding: 10px 15px;
+            background: #28a745;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background: #218838;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        li {
+            background: white;
+            margin: 10px auto;
+            padding: 15px;
+            width: 50%;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        a {
+            text-decoration: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+            color: white;
+        }
+        a[href^="/complete"] {
+            background: #007bff;
+        }
+        a[href^="/complete"]:hover {
+            background: #0056b3;
+        }
+        a[href^="/delete"] {
+            background: #dc3545;
+        }
+        a[href^="/delete"]:hover {
+            background: #c82333;
+        }
+    </style>
+</head>
+<body>
+    <h2>Workout Planner</h2>
+    <form action="/add" method="post">
+        <input type="text" name="name" placeholder="Exercise Name" required>
+        <input type="number" name="sets" placeholder="Sets" required>
+        <input type="number" name="reps" placeholder="Reps" required>
+        <button type="submit">Add Exercise</button>
+    </form>
+    
+    <h3>Workout List</h3>
+    <ul>
+        {% for exercise in exercises %}
+            <li>
+                <span>{{ exercise[1] }} - {{ exercise[2] }} sets x {{ exercise[3] }} reps</span>
+                <div>
+                    {% if exercise[4] == 0 %}
+                        <a href="/complete/{{ exercise[0] }}">Mark Completed</a>
+                    {% else %}
+                        ✅ Completed
+                    {% endif %}
+                    <a href="/delete/{{ exercise[0] }}">Delete</a>
+                </div>
+            </li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
